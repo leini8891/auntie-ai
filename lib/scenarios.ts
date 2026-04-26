@@ -1,6 +1,16 @@
 import type { Scenario } from "./types";
 
 /**
+ * Expected riskLevel outputs when tested against GLM/gpt-4o-mini:
+ *
+ *   - bill:           Safe
+ *   - bank-phishing:  Very High
+ *   - crypto-scam:    Very High
+ *   - advance-fee:    Very High
+ *   - gov-impersonation: High or Very High
+ */
+
+/**
  * The 5 demo scenarios. Sent to GLM as the "screen text" input.
  * Order matters for Demo Day: bill (warm-up) → bank (high) → crypto (very high).
  */
