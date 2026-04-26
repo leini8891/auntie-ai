@@ -13,11 +13,14 @@ interface AppState {
   errorMessage: string | null;
   /** File uploaded via drag-drop or camera on /upload page */
   uploadedFile: File | null;
+  /** Base64 data URL of the uploaded image (for vision API) */
+  imageDataUrl: string | null;
   setLang: (lang: Lang) => void;
   setStatus: (status: Status) => void;
   setAssessment: (a: RiskAssessment) => void;
   setError: (msg: string) => void;
   setUploadedFile: (file: File | null) => void;
+  setImageDataUrl: (url: string | null) => void;
   reset: () => void;
 }
 
@@ -27,13 +30,15 @@ export const useStore = create<AppState>((set) => ({
   assessment: null,
   errorMessage: null,
   uploadedFile: null,
+  imageDataUrl: null,
   setLang: (lang) => set({ lang }),
   setStatus: (status) => set({ status }),
   setAssessment: (assessment) =>
     set({ assessment, status: "result", errorMessage: null }),
   setError: (errorMessage) => set({ errorMessage, status: "error" }),
   setUploadedFile: (uploadedFile) => set({ uploadedFile }),
-  reset: () => set({ status: "idle", assessment: null, errorMessage: null, uploadedFile: null }),
+  setImageDataUrl: (imageDataUrl) => set({ imageDataUrl }),
+  reset: () => set({ status: "idle", assessment: null, errorMessage: null, uploadedFile: null, imageDataUrl: null }),
 }));
 
 /** Hook for translated strings — pulls language from store. */

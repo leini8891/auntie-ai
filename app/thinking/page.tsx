@@ -12,16 +12,12 @@ export default function ThinkingPage() {
   const router = useRouter();
   const lang = useStore((s) => s.lang);
   const uploadedFile = useStore((s) => s.uploadedFile);
+  const imageDataUrl = useStore((s) => s.imageDataUrl);
   const status = useStore((s) => s.status);
   const setStatus = useStore((s) => s.setStatus);
   const setAssessment = useStore((s) => s.setAssessment);
   const setError = useStore((s) => s.setError);
 
-  // We need to know which scenario was selected — derive it from store
-  // (stored via a URL param or sessionStorage; here we use a simple approach:
-  // read from a transient state that /upload set before navigation.)
-  // For now: we check if there's an uploadedFile or fall back to reading
-  // the scenario from URL searchParams.
   const [scenarioId, setScenarioId] = useState<string | null>(null);
 
   useEffect(() => {
@@ -30,33 +26,38 @@ export default function ThinkingPage() {
     const sid = params.get("scenario");
     if (sid) setScenarioId(sid);
 
-    // If no file and no scenario, go back home
-    if (!uploadedFile && !sid) {
+    // If no image data and no scenario, go back home
+    if (!imageDataUrl && !sid) {
       router.push("/");
       return;
     }
-  }, [uploadedFile, router]);
+  }, [imageDataUrl, router]);
 
   /* ── Fire API call on mount when we have context ── */
   useEffect(() => {
-    if (!uploadedFile && !scenarioId) return;
+    if (!imageDataUrl && !scenarioId) return;
 
     let cancelled = false;
 
     async function runCheck() {
       try {
-        // For now: if file uploaded, use bank-phishing text as fallback
-        // Real vision is Prompt #6
-        const screenText = uploadedFile
-          ? "[Screenshot uploaded] Please analyze this image for scam signals."
-          : SCENARIOS.find((s) => s.id === scenarioId)?.screenText ?? "";
+        let body: Record<string, string>;
 
-        if (!screenText || cancelled) return;
+        if (imageDataUrl) {
+          // Vision mode: send base64 image to multimodal API
+          body = { imageDataUrl, language: lang };
+        } else {
+          // Text mode: send scenario screen text
+          const screenText =
+            SCENARIOS.find((s) => s.id === scenarioId)?.screenText ?? "";
+          if (!screenText || cancelled) return;
+          body = { screenText, language: lang };
+        }
 
         const res = await fetch("/api/check", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ screenText, language: lang }),
+          body: JSON.stringify(body),
         });
 
         const data = await res.json();
@@ -78,9 +79,9 @@ export default function ThinkingPage() {
     return () => {
       cancelled = true;
     };
-  }, [uploadedFile, scenarioId, lang, setAssessment, setError, router]);
+  }, [imageDataUrl, scenarioId, lang, setAssessment, setError, router]);
 
-  /* ── Determine what preview text to show ── */
+  /* ── Determine what preview to show ── */
   const activeScenario = scenarioId
     ? SCENARIOS.find((s) => s.id === scenarioId)
     : null;
@@ -107,13 +108,18 @@ export default function ThinkingPage() {
             <div className="text-sm uppercase tracking-wider text-stone font-semibold mb-2">
               {t("thinking.reading")}
             </div>
-            {uploadedFile ? (
-              <div className="flex items-center gap-3 rounded-lg bg-white border border-mist p-3">
-                <span className="text-2xl">🖼️</span>
-                <div>
-                  <p className="text-[15px] font-semibold text-ink">{uploadedFile.name}</p>
+            {uploadedFile && imageDataUrl ? (
+              <div className="rounded-lg overflow-hidden border border-mist">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src={imageDataUrl}
+                  alt={uploadedFile.name}
+                  className="w-full h-auto max-h-[240px] object-contain bg-white"
+                />
+                <div className="bg-white px-3 py-2 border-t border-mist">
+                  <p className="text-[14px] font-medium text-ink">{uploadedFile.name}</p>
                   <p className="text-xs text-stone mt-0.5">
-                    {(uploadedFile.size / 1024).toFixed(1)} KB
+                    {(uploadedFile.size / 1024).toFixed(1)} KB · Vision analysis
                   </p>
                 </div>
               </div>

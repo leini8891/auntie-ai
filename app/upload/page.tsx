@@ -16,6 +16,7 @@ export default function UploadPage() {
   const lang = useStore((s) => s.lang);
   const uploadedFile = useStore((s) => s.uploadedFile);
   const setUploadedFile = useStore((s) => s.setUploadedFile);
+  const setImageDataUrl = useStore((s) => s.setImageDataUrl);
   const setStatus = useStore((s) => s.setStatus);
   const setAssessment = useStore((s) => s.setAssessment);
 
@@ -40,6 +41,13 @@ export default function UploadPage() {
       return;
     }
     setUploadedFile(file);
+
+    // Convert file to base64 data URL for vision API
+    const reader = new FileReader();
+    reader.onload = () => {
+      setImageDataUrl(reader.result as string);
+    };
+    reader.readAsDataURL(file);
   }
 
   function onDrop(e: React.DragEvent<HTMLDivElement>) {
@@ -71,13 +79,12 @@ export default function UploadPage() {
   function pickScenario(id: ScenarioId) {
     setSelectedScenarioId(id);
     setUploadedFile(null); // clear file selection
+    setImageDataUrl(null); // clear image data URL
     setFileError(null);
   }
 
   /* ── Navigate to /thinking ── */
   function goCheck() {
-    // For now: if a file is uploaded, treat it as bank-phishing for testing
-    // (real vision call is Prompt #6)
     if (!uploadedFile && !selectedScenarioId) return;
 
     setStatus("checking");
@@ -140,6 +147,7 @@ export default function UploadPage() {
                 onClick={(e) => {
                   e.stopPropagation();
                   setUploadedFile(null);
+                  setImageDataUrl(null);
                 }}
                 className="mt-2 text-sm text-red-600 underline"
               >
