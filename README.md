@@ -5,6 +5,10 @@
 
 **Build started: 2026-04-25** · Solo MVP · 5-day sprint
 
+## 🌐 Live Demo
+
+👉 **[Try Auntie AI now](http://7f5513995d664d838d7926fef9d60988.ap-singapore.myide.io)** — deployed on CloudStudio
+
 ---
 
 ## What This Is
@@ -55,37 +59,41 @@ Click any of the **5 sample scenarios** on the home page — they call the real 
 
 ---
 
-## What's Stubbed for Day 2
+## Day 2 Features (All Completed ✅)
 
-| File | Status | Next Step |
+| Feature | Prompt | Status |
 |---|---|---|
-| `app/upload/page.tsx` | 🚧 | Drag-drop + camera input — see `CodeBuddy_Prompts.md` #2 |
-| `app/thinking/page.tsx` | 🚧 | Dedicated route variant — see Prompt #3 |
-| `app/result/page.tsx` | 🚧 | Standalone result route — see Prompt #4 |
-| `app/alert/page.tsx` | 🚧 | Standalone family alert route — see Prompt #5 |
-| Hokkien audio | 🚧 | Drop `public/audio/hokkien-warning.mp3` and uncomment the play button hook |
-| Vision input | 🚧 | Switch to `glm-4.5v` for screenshot upload — see Prompt #6 |
+| Hokkien warning audio (play/pause/auto-play) | #1 | ✅ |
+| Upload page (drag-drop + camera + sample grid) | #2 | ✅ |
+| Thinking page (agent steps + API call) | #3 | ✅ |
+| Result page (RiskCard + FamilyAlertCallout) | #4 | ✅ |
+| Family Alert page (recipient card + copy + WhatsApp) | #5 | ✅ |
+| Vision API (multimodal screenshot analysis) | #6 | ✅ |
+| Ambiguous case handling (4 few-shot examples) | #7 | ✅ |
+| Live deployment + smoke test | #8 | ✅ |
 
 ---
 
 ## Architecture
 
 ```
-User taps a sample scenario on /
+Home (/) → Upload (/upload) or pick a scenario
         ↓
-useStore.setStatus('checking')
+Upload: drag-drop/camera → FileReader → base64 dataURL in Zustand
         ↓
-fetch POST /api/check { screenText, language }
+Thinking (/thinking) — shows AgentSteps (THINK · DECIDE · EXECUTE)
         ↓
-app/api/check/route.ts → assessText() → Z.ai GLM-4.5
+POST /api/check { screenText OR imageDataUrl, language }
         ↓
-Zod validates RiskAssessment JSON
+route.ts routes to assessText() or assessImage() (multimodal vision)
         ↓
-useStore.setAssessment(result) → status='result'
+OpenAI gpt-4o-mini with tuned system prompt + 4 few-shot examples
         ↓
-<RiskCard /> renders verdict + actions + family alert
+Zod validates RiskAssessment JSON → store.setAssessment()
         ↓
-[High Risk only] <a href="wa.me/..."> opens WhatsApp prefilled
+Result (/result) — <RiskCard> + <FamilyAlertCallout> + audio button
+        ↓
+[High/Very High] Alert (/alert) — recipient card, copy, WhatsApp CTA
 ```
 
 ---
@@ -124,22 +132,22 @@ Expect a response like:
 
 ## Submission Checklist
 
-- [ ] CodeBuddy deployment URL (required — submit form will reject without)
+- [x] CodeBuddy deployment URL — **[Live Demo](http://7f5513995d664d838d7926fef9d60988.ap-singapore.myide.io)**
 - [ ] Vercel backup URL (insurance)
 - [ ] 90-second demo video
 - [ ] 7-slide pitch deck
-- [ ] GitHub repo public + clean commit history starting 2026-04-25
-- [ ] README first line shows date stamp
+- [x] GitHub repo public + clean commit history starting 2026-04-25
+- [x] README first line shows date stamp
 
 ---
 
 ## Tech Stack
 
-- **Next.js 14** (App Router) + TypeScript + Tailwind
+- **Next.js 14** (App Router) + TypeScript + Tailwind CSS
 - **Zustand** for client state
 - **Zod** for runtime schema validation
-- **Z.ai GLM-4.5** (text reasoning) — API key required
-- **Z.ai GLM-4.5V** (vision) — for screenshot upload (Day 2)
+- **OpenAI gpt-4o-mini** (text + vision/multimodal) — API key required
+- **CloudStudio** for deployment
 
 ---
 
