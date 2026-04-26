@@ -40,6 +40,11 @@ const DICT = {
     "upload.fileSelected": "File selected:",
     "upload.tooLarge": "File too large (max 5 MB)",
     "upload.wrongType": "Please use JPG, PNG, or HEIC",
+
+    "thinking.h1": "Auntie is checking…",
+    "thinking.reading": "Now reading",
+    "thinking.waiting": "Auntie is taking a careful look",
+    "thinking.timing": "Usually 5–15 seconds",
   },
   zh: {
     "home.h1.line1": "在你点击之前，",
@@ -76,6 +81,11 @@ const DICT = {
     "upload.fileSelected": "已选择文件：",
     "upload.tooLarge": "文件太大（最大 5 MB）",
     "upload.wrongType": "请使用 JPG、PNG 或 HEIC 格式",
+
+    "thinking.h1": "Auntie 正在看一眼…",
+    "thinking.reading": "正在分析的画面",
+    "thinking.waiting": "Auntie 正在仔细看清楚",
+    "thinking.timing": "通常 5–15 秒",
   },
 } as const;
 

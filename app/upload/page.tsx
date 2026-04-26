@@ -81,7 +81,8 @@ export default function UploadPage() {
     if (!uploadedFile && !selectedScenarioId) return;
 
     setStatus("checking");
-    router.push("/thinking");
+    const query = selectedScenarioId ? `?scenario=${selectedScenarioId}` : "";
+    router.push(`/thinking${query}`);
   }
 
   const hasSelection = !!uploadedFile || !!selectedScenarioId;
