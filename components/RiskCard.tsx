@@ -1,12 +1,67 @@
 "use client";
 
+import { useState, useRef, useEffect, useCallback } from "react";
 import type { RiskAssessment } from "@/lib/types";
 import { useT } from "@/lib/store";
+
+const HOKKIEN_AUDIO_URL = "/audio/hokkien-warning.mp3";
 
 export function RiskCard({ assessment }: { assessment: RiskAssessment }) {
   const t = useT();
   const isHigh = assessment.riskLevel === "High" || assessment.riskLevel === "Very High";
+  const isVeryHigh = assessment.riskLevel === "Very High";
   const isSafe = assessment.riskLevel === "Safe";
+
+  /* ── Audio: Hokkien warning button + auto-play on Very High ── */
+  const [isPlaying, setIsPlaying] = useState(false);
+  const audioRef = useRef<HTMLAudioElement | null>(null);
+  const hasInteracted = useRef(false);
+  const autoPlayedRef = useRef(false);
+
+  // Lazily create Audio instance on first play
+  const getAudio = useCallback(() => {
+    if (!audioRef.current) {
+      audioRef.current = new Audio(HOKKIEN_AUDIO_URL);
+      audioRef.current.addEventListener("ended", () => setIsPlaying(false));
+    }
+    return audioRef.current;
+  }, []);
+
+  function togglePlay() {
+    const audio = getAudio();
+    if (isPlaying) {
+      audio.pause();
+      audio.currentTime = 0;
+      setIsPlaying(false);
+    } else {
+      audio.play().catch(() => setIsPlaying(false));
+      setIsPlaying(true);
+    }
+  }
+
+  // Track user interaction (click/touch anywhere) to enable auto-play policy
+  useEffect(() => {
+    function markInteracted() {
+      hasInteracted.current = true;
+    }
+    document.addEventListener("click", markInteracted, { once: true });
+    document.addEventListener("touchstart", markInteracted, { once: true });
+    return () => {
+      document.removeEventListener("click", markInteracted);
+      document.removeEventListener("touchstart", markInteracted);
+    };
+  }, []);
+
+  // Auto-play once when riskLevel becomes Very High (after user interaction)
+  useEffect(() => {
+    if (!isVeryHigh || !hasInteracted.current || autoPlayedRef.current) return;
+    autoPlayedRef.current = true;
+    const audio = getAudio();
+    audio.play().catch(() => {
+      // Autoplay blocked — silently fail, user can still tap manually
+    });
+    setIsPlaying(true);
+  }, [isVeryHigh, getAudio]);
 
   return (
     <div className="space-y-4">
@@ -51,8 +106,12 @@ export function RiskCard({ assessment }: { assessment: RiskAssessment }) {
         </div>
 
         {isHigh && (
-          <button className="w-full mt-2 py-3 rounded-xl bg-white border border-red-200 text-red-700 font-semibold text-base flex items-center justify-center gap-2">
-            {t("result.audio")}
+          <button
+            onClick={togglePlay}
+            disabled={isPlaying}
+            className="w-full mt-2 py-3 rounded-xl bg-white border border-red-200 text-red-700 font-semibold text-base flex items-center justify-center gap-2 disabled:opacity-70 cursor-pointer disabled:cursor-not-allowed transition-opacity"
+          >
+            {isPlaying ? "Playing... ⏸" : t("result.audio")}
           </button>
         )}
       </div>
