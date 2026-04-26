@@ -1,0 +1,48 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --color-ink: #0F1A2E;
+  --color-navy: #0F4C81;
+}
+
+html, body {
+  background: #F8F4EB; /* cream */
+  color: var(--color-ink);
+}
+
+/* Mobile-first base sizing for senior accessibility */
+body {
+  font-size: 17px;
+  line-height: 1.55;
+}
+
+/* Pulse animation for the thinking dots */
+@keyframes pulse-dot {
+  0%, 80%, 100% { transform: scale(0.7); opacity: 0.4; }
+  40% { transform: scale(1); opacity: 1; }
+}
+.pulse-dot { animation: pulse-dot 1.4s infinite ease-in-out; }
+.pulse-dot:nth-child(2) { animation-delay: 0.2s; }
+.pulse-dot:nth-child(3) { animation-delay: 0.4s; }
+
+/* Diagonal danger stripes for high-risk cards */
+.danger-stripe {
+  background: repeating-linear-gradient(
+    45deg,
+    #FEF2F2,
+    #FEF2F2 10px,
+    #FEE2E2 10px,
+    #FEE2E2 20px
+  );
+}
+
+.badge-glow { box-shadow: 0 0 0 6px rgba(217, 72, 15, 0.12); }
+
+.agent-tag {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  color: #0E7C7B;
+}
