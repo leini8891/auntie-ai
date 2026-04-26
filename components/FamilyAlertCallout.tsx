@@ -2,7 +2,7 @@
 
 import type { RiskAssessment } from "@/lib/types";
 import { useT } from "@/lib/store";
-import { useStore } from "@/lib/store";
+import Link from "next/link";
 
 interface FamilyAlertCalloutProps {
   assessment: RiskAssessment;
@@ -10,7 +10,6 @@ interface FamilyAlertCalloutProps {
 
 export function FamilyAlertCallout({ assessment }: FamilyAlertCalloutProps) {
   const t = useT();
-  const lang = useStore((s) => s.lang);
 
   if (!assessment.familyAlertDraft) return null;
 
@@ -22,14 +21,12 @@ export function FamilyAlertCallout({ assessment }: FamilyAlertCalloutProps) {
       <div className="text-[15px] leading-relaxed text-ink whitespace-pre-line bg-white rounded-lg border border-mist p-3 mb-3">
         {assessment.familyAlertDraft}
       </div>
-      <a
-        href={`https://wa.me/?text=${encodeURIComponent(assessment.familyAlertDraft)}`}
-        target="_blank"
-        rel="noopener noreferrer"
+      <Link
+        href="/alert"
         className="block w-full py-4 rounded-2xl bg-emerald-600 text-white font-bold text-[18px] text-center hover:bg-emerald-700 transition"
       >
-        {lang === "zh" ? "用 WhatsApp 发出去" : "Send via WhatsApp"}
-      </a>
+        📤 {t("result.cta1")}
+      </Link>
       <p className="text-[13px] text-stone mt-2 text-center">
         {t("result.familyAlertHelp")}
       </p>

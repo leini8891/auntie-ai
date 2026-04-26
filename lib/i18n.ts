@@ -49,6 +49,17 @@ const DICT = {
     "result.familyAlertTitle": "Pre-written message for family",
     "result.familyAlertHelp": "Tapping opens WhatsApp with the message pre-filled — just confirm to send",
     "result.checkAnother": "Check Another Screen",
+
+    "alert.h1": "Send to Family",
+    "alert.recipient": "Recipient",
+    "alert.edit": "Edit",
+    "alert.messageLabel": "Message",
+    "alert.redactedNote": "🛡️ Sensitive info auto-redacted",
+    "alert.copy": "Copy ⎘",
+    "alert.copied": "Copied!",
+    "alert.sendWhatsapp": "Send via WhatsApp",
+    "alert.helpText": "Tapping opens WhatsApp with the message pre-filled — just confirm to send",
+    "alert.copyTip": "💡 You can also just copy the message and paste it anywhere",
   },
   zh: {
     "home.h1.line1": "在你点击之前，",
@@ -94,6 +105,17 @@ const DICT = {
     "result.familyAlertTitle": "已为你写好的消息",
     "result.familyAlertHelp": "点击后打开 WhatsApp，消息已填好，确认即可发送",
     "result.checkAnother": "再检查另一屏",
+
+    "alert.h1": "发给家人确认",
+    "alert.recipient": "收件人",
+    "alert.edit": "编辑",
+    "alert.messageLabel": "消息内容",
+    "alert.redactedNote": "🛡️ 敏感信息已自动隐去",
+    "alert.copy": "复制 ⎘",
+    "alert.copied": "已复制！",
+    "alert.sendWhatsapp": "通过 WhatsApp 发送",
+    "alert.helpText": "点击打开 WhatsApp，消息已填好，确认即可发送",
+    "alert.copyTip": "💡 你也可以复制消息，粘贴到任何地方",
   },
 } as const;
 
