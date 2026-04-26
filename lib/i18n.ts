@@ -45,6 +45,10 @@ const DICT = {
     "thinking.reading": "Now reading",
     "thinking.waiting": "Auntie is taking a careful look",
     "thinking.timing": "Usually 5–15 seconds",
+
+    "result.familyAlertTitle": "Pre-written message for family",
+    "result.familyAlertHelp": "Tapping opens WhatsApp with the message pre-filled — just confirm to send",
+    "result.checkAnother": "Check Another Screen",
   },
   zh: {
     "home.h1.line1": "在你点击之前，",
@@ -86,6 +90,10 @@ const DICT = {
     "thinking.reading": "正在分析的画面",
     "thinking.waiting": "Auntie 正在仔细看清楚",
     "thinking.timing": "通常 5–15 秒",
+
+    "result.familyAlertTitle": "已为你写好的消息",
+    "result.familyAlertHelp": "点击后打开 WhatsApp，消息已填好，确认即可发送",
+    "result.checkAnother": "再检查另一屏",
   },
 } as const;
 
