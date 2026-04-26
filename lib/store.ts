@@ -11,10 +11,13 @@ interface AppState {
   status: Status;
   assessment: RiskAssessment | null;
   errorMessage: string | null;
+  /** File uploaded via drag-drop or camera on /upload page */
+  uploadedFile: File | null;
   setLang: (lang: Lang) => void;
   setStatus: (status: Status) => void;
   setAssessment: (a: RiskAssessment) => void;
   setError: (msg: string) => void;
+  setUploadedFile: (file: File | null) => void;
   reset: () => void;
 }
 
@@ -23,12 +26,14 @@ export const useStore = create<AppState>((set) => ({
   status: "idle",
   assessment: null,
   errorMessage: null,
+  uploadedFile: null,
   setLang: (lang) => set({ lang }),
   setStatus: (status) => set({ status }),
   setAssessment: (assessment) =>
     set({ assessment, status: "result", errorMessage: null }),
   setError: (errorMessage) => set({ errorMessage, status: "error" }),
-  reset: () => set({ status: "idle", assessment: null, errorMessage: null }),
+  setUploadedFile: (uploadedFile) => set({ uploadedFile }),
+  reset: () => set({ status: "idle", assessment: null, errorMessage: null, uploadedFile: null }),
 }));
 
 /** Hook for translated strings — pulls language from store. */

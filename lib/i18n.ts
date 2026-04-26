@@ -29,6 +29,17 @@ const DICT = {
     "result.cta2": "Check Another Screen",
 
     "common.back": "Back",
+
+    "upload.h1": "What should Auntie look at?",
+    "upload.dropLabel": "Drop a screenshot here",
+    "upload.dropOr": "or",
+    "upload.cameraBtn": "📷 Take a photo",
+    "upload.samples": "Or try a sample scenario",
+    "upload.cta": "Check this screen with AI →",
+    "upload.ctaDisabled": "Select a file or sample above first",
+    "upload.fileSelected": "File selected:",
+    "upload.tooLarge": "File too large (max 5 MB)",
+    "upload.wrongType": "Please use JPG, PNG, or HEIC",
   },
   zh: {
     "home.h1.line1": "在你点击之前，",
@@ -54,6 +65,17 @@ const DICT = {
     "result.cta2": "再检查另一屏",
 
     "common.back": "返回",
+
+    "upload.h1": "要让 Auntie 看什么？",
+    "upload.dropLabel": "把截图拖到这里",
+    "upload.dropOr": "或",
+    "upload.cameraBtn": "📷 拍一张照片",
+    "upload.samples": "或者试试示例场景",
+    "upload.cta": "用 AI 检查这一屏 →",
+    "upload.ctaDisabled": "请先选择文件或点击上方示例",
+    "upload.fileSelected": "已选择文件：",
+    "upload.tooLarge": "文件太大（最大 5 MB）",
+    "upload.wrongType": "请使用 JPG、PNG 或 HEIC 格式",
   },
 } as const;
 

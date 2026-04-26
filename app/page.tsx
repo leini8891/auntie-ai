@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Link from "next/link";
 import { useStore, useT } from "@/lib/store";
 import { SCENARIOS } from "@/lib/scenarios";
 import { LangToggle } from "@/components/LangToggle";
@@ -67,15 +68,15 @@ export default function HomePage() {
             </h1>
             <p className="text-stone text-[19px] leading-relaxed mb-6">{t("home.sub")}</p>
 
-            <button
-              disabled
-              className="w-full py-5 rounded-2xl bg-navy/30 text-white font-bold text-[20px] mb-3 cursor-not-allowed"
+            <Link
+              href="/upload"
+              className="block w-full py-5 rounded-2xl bg-navy text-white font-bold text-[20px] mb-3 text-center hover:bg-navy/90 transition shadow-md active:scale-[0.98]"
             >
               {t("home.cta1")}
               <span className="block text-[12px] font-normal opacity-80 mt-1">
-                {lang === "zh" ? "(上传功能待开发 — 先用下方示例)" : "(Upload coming soon — try a sample below)"}
+                {lang === "zh" ? "(拍照或上传截图)" : "(Take photo or upload screenshot)"}
               </span>
-            </button>
+            </Link>
 
             <div className="text-sm font-semibold text-stone uppercase tracking-wide mb-3 mt-6">
               {t("home.recent")}
