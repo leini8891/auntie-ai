@@ -1,14 +1,79 @@
-node_modules
-.next
-.env
-.env.local
-.DS_Store
-*.log
-.vercel
-.tsbuildinfo
+# Dependencies
+node_modules/
+.pnp
+.pnp.js
+
+# Next.js
+.next/
+out/
+build/
+.vercel/
+.turbo/
 next-env.d.ts
+*.tsbuildinfo
 
-# Private prompt pack (not for public repo)
-CodeBuddy_Prempts.md
+# Environment variables / secrets
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.p12
+*.pfx
+
+# OS / editor
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+.codex/
+.claude/
+.claire/
+.cursor/
+
+# Logs
+*.log
+logs/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+*.pid
+*.out
+*.err
+
+# Python / local tooling
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+.coverage.*
+htmlcov/
+.venv/
+venv/
+
+# Local databases / generated stores
+*.sqlite
+*.sqlite3
+*.db
+
+# Private prompts / working notes
+CodeBuddy_Prompts.md
+*_Prompts.md
+*.private.md
+*.local.md
+docs/private/
+notes/private/
+
+# Internal planning drafts
+Auntie_AI_Project_Plan.docx
+*.draft.docx
+
+# Local-only demo artifacts
+recordings/private/
+docs/screenshots/private/
+
+# AI / tool workspace
 .codebuddy/
-
