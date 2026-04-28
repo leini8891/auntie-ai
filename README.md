@@ -153,4 +153,6 @@ Expect a response like:
 
 ## License
 
-MIT — but seriously, build something kind with it.
+Copyright (c) 2026 Elena. All rights reserved.
+
+This source code is shared publicly for educational and competitive review purposes only (CodeBuddy × GLM Global AI Hackathon Singapore 2026). Commercial use, redistribution, or derivative products require written permission. Contact: leini8891@gmail.com
