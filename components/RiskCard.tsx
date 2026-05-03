@@ -57,10 +57,14 @@ export function RiskCard({ assessment }: { assessment: RiskAssessment }) {
     if (!isVeryHigh || !hasInteracted.current || autoPlayedRef.current) return;
     autoPlayedRef.current = true;
     const audio = getAudio();
-    audio.play().catch(() => {
-      // Autoplay blocked — silently fail, user can still tap manually
-    });
-    setIsPlaying(true);
+    // Only set isPlaying=true AFTER play() resolves — prevents the button
+    // getting stuck in disabled state when autoplay is blocked by the browser
+    // (common when the user gesture happened 5-15s ago during API wait).
+    audio.play()
+      .then(() => setIsPlaying(true))
+      .catch(() => {
+        // Autoplay blocked — silently fail, user can still tap manually
+      });
   }, [isVeryHigh, getAudio]);
 
   return (
