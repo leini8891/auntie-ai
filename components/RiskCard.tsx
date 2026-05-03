@@ -34,8 +34,12 @@ export function RiskCard({ assessment }: { assessment: RiskAssessment }) {
       audio.currentTime = 0;
       setIsPlaying(false);
     } else {
-      audio.play().catch(() => setIsPlaying(false));
-      setIsPlaying(true);
+      audio.play()
+        .then(() => setIsPlaying(true))
+        .catch((err) => {
+          console.error("Audio play failed:", err);
+          setIsPlaying(false);
+        });
     }
   }
 
