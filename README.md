@@ -7,6 +7,7 @@
 
 ## 🌐 Live Demo
 
+👉 **[Try Auntie AI now](https://auntie-ai.vercel.app/)** — deployed on Vercel
 👉 **[Try Auntie AI now](http://7f5513995d664d838d7926fef9d60988.ap-singapore.myide.io)** — deployed on CloudStudio
 
 ---
