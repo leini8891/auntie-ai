@@ -10,6 +10,10 @@
 👉 **[Try Auntie AI now](https://auntie-ai.vercel.app/)** — deployed on Vercel
 👉 **[Try Auntie AI now](http://7f5513995d664d838d7926fef9d60988.ap-singapore.myide.io)** — deployed on CloudStudio
 
+<p align="center">
+  <img src="docs/img/auntie.png" alt="Auntie AI — tap one button to get a plain-language scam risk check, with sample scenarios to try" width="380">
+</p>
+
 ---
 
 ## What This Is
